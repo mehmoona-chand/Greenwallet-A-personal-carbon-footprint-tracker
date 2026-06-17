@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenWallet | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="api.js"></script>
+   <script src="navbar-auth.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link">Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="login.html" class="btn-login">Login</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD BODY -->
+  <main class="dashboard-main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="header-left">
+        <p class="header-eyebrow">Your Impact Overview</p>
+        <h1 class="header-title">Carbon <span class="accent">Dashboard</span></h1>
+        <p class="header-sub">Track your daily footprint and watch your impact grow smaller 🌿</p>
+      </div>
+      <div class="header-right">
+        <div class="goal-ring-wrap">
+          <svg class="goal-ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52" />
+            <circle class="ring-fill" id="goal-ring-fill" cx="60" cy="60" r="52" />
+          </svg>
+          <div class="ring-label">
+            <span class="ring-pct" id="ring-pct">0%</span>
+            <span class="ring-text">of daily goal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOP STAT CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card" data-delay="0">
+        <div class="stat-icon"><i class="fas fa-cloud"></i></div>
+        <div class="stat-content">
+          <span class="stat-label">Avg Daily CO₂</span>
+          <span class="stat-value" id="average-co2">—</span>
+          <span class="stat-unit">kg per day</span>
+        </div>
+        <div class="stat-bar-wrap"><div class="stat-bar" id="bar-avg"></div></div>
+      </div>
+
+      <div class="stat-card" data-delay="1">
+        <div class="stat-icon green"><i class="fas fa-tree"></i></div>
+        <div class="stat-content">
+          <span class="stat-label">Trees Equivalent</span>
+          <span class="stat-value" id="total-trees">—</span>
+          <span class="stat-unit">trees needed/yr</span>
+        </div>
+        <div class="stat-bar-wrap"><div class="stat-bar green" id="bar-trees"></div></div>
+      </div>
+
+      <div class="stat-card" data-delay="2">
+        <div class="stat-icon amber"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-content">
+          <span class="stat-label">Total Entries</span>
+          <span class="stat-value" id="total-entries">—</span>
+          <span class="stat-unit">calculations saved</span>
+        </div>
+        <div class="stat-bar-wrap"><div class="stat-bar amber" id="bar-entries"></div></div>
+      </div>
+
+      <div class="stat-card" data-delay="3">
+        <div class="stat-icon blue"><i class="fas fa-arrow-trend-down"></i></div>
+        <div class="stat-content">
+          <span class="stat-label">vs Pakistan Avg</span>
+          <span class="stat-value" id="vs-avg">—</span>
+          <span class="stat-unit">national benchmark</span>
+        </div>
+        <div class="stat-bar-wrap"><div class="stat-bar blue" id="bar-vs"></div></div>
+      </div>
+    </div>
+
+    <!-- CHARTS ROW -->
+    <div class="charts-row">
+
+      <!-- LINE CHART -->
+      <div class="chart-card wide">
+        <div class="chart-header">
+          <div>
+            <h3>CO₂ Trend</h3>
+            <p>Your emissions over time</p>
+          </div>
+          <div class="chart-filters">
+            <button class="filter-btn active" data-range="all">All</button>
+            <button class="filter-btn" data-range="7">7 days</button>
+            <button class="filter-btn" data-range="30">30 days</button>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="co2-chart"></canvas>
+          <div class="empty-state" id="empty-line">
+            <i class="fas fa-chart-line"></i>
+            <p>No data yet — save a calculation first!</p>
+            <a href="carbon-calculator.html" class="empty-cta">Go to Calculator →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DONUT CHART -->
+      <div class="chart-card narrow">
+        <div class="chart-header">
+          <div>
+            <h3>By Category</h3>
+            <p>Latest entry breakdown</p>
+          </div>
+        </div>
+        <div class="chart-wrap donut-wrap">
+          <canvas id="pie-chart"></canvas>
+          <div class="donut-center" id="donut-center">
+            <span class="donut-val" id="donut-total">—</span>
+            <span class="donut-lbl">kg CO₂</span>
+          </div>
+          <div class="empty-state" id="empty-pie">
+            <i class="fas fa-chart-pie"></i>
+            <p>Save a calculation to see your breakdown</p>
+          </div>
+        </div>
+        <!-- Custom Legend -->
+        <div class="donut-legend" id="donut-legend"></div>
+      </div>
+    </div>
+
+    <!-- BENCHMARK + FOREST ROW -->
+    <div class="bottom-row">
+
+      <!-- PAKISTAN BENCHMARK -->
+      <div class="bench-card">
+        <h3><i class="fas fa-flag"></i> Pakistan Benchmark</h3>
+        <p class="bench-sub">How you compare to national average</p>
+        <div class="bench-bars">
+          <div class="bench-item">
+            <span class="bench-label">You (daily avg)</span>
+            <div class="bench-track">
+              <div class="bench-fill you" id="bench-you"></div>
+            </div>
+            <span class="bench-num" id="bench-you-num">—</span>
+          </div>
+          <div class="bench-item">
+            <span class="bench-label">Pakistan avg</span>
+            <div class="bench-track">
+              <div class="bench-fill pak" style="width:100%"></div>
+            </div>
+            <span class="bench-num">2.74 kg</span>
+          </div>
+          <div class="bench-item">
+            <span class="bench-label">World avg</span>
+            <div class="bench-track">
+              <div class="bench-fill world" style="width:100%"></div>
+            </div>
+            <span class="bench-num">10.9 kg</span>
+          </div>
+        </div>
+        <p class="bench-verdict" id="bench-verdict"></p>
+      </div>
+
+      <!-- VIRTUAL FOREST -->
+      <div class="forest-card">
+        <h3><i class="fas fa-seedling"></i> Your Virtual Forest</h3>
+        <p class="forest-sub">Trees grow every time you log a green day</p>
+        <div class="forest-grid" id="forest-grid"></div>
+        <p class="forest-count" id="forest-count">Log entries to grow your forest 🌱</p>
+      </div>
+
+    </div>
+
+    <!-- HISTORY TABLE -->
+    <div class="history-card">
+      <div class="history-header">
+        <div>
+          <h3>Calculation History</h3>
+          <p>All your saved entries</p>
+        </div>
+        <button class="clear-btn" id="clear-btn">
+          <i class="fas fa-trash-alt"></i> Clear All
+        </button>
+      </div>
+      <div class="history-table-wrap">
+        <table class="history-table" id="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Daily CO₂</th>
+              <th>Trees/yr</th>
+              <th>Top Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+          </tbody>
+        </table>
+        <div class="empty-state" id="empty-history" style="display:none">
+          <i class="fas fa-clock-rotate-left"></i>
+          <p>No history yet. Start tracking your carbon footprint!</p>
+          <a href="carbon-calculator.html" class="empty-cta">Calculate Now →</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+<footer class="footer footer-rounded
+ ">
+  <div class="container footer-container">
+    
+    <!-- Logo + Tagline -->
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <p class="tagline">Track. Reduce. Inspire. Grow Your Forest.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-links">
+      <div class="link-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Team</a></li>
+          <li><a href="about.html">Careers</a></li>
+          <li><a href="index.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="link-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="about.html">Help Center</a></li>
+          <li><a href="about.html">FAQ</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="link-col social">
+        <h4>Connect</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-col">
+      <h4>Stay Green</h4>
+      <p>Get eco tips & updates weekly.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

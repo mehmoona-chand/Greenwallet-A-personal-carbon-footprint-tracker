@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenWallet | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+  <script src="api.js"></script>
+  <script src="navbar-auth.js"></script>
+
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link">Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- SPLIT LAYOUT -->
+  <div class="login-page">
+
+    <!-- LEFT — illustrated plant scene -->
+    <div class="login-left">
+
+      <!-- Floating orbs (inspired by reference images) -->
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="orb orb-4"></div>
+      <div class="orb orb-5"></div>
+
+      <!-- Main plant pot SVG illustration -->
+      <div class="plant-scene">
+        <svg class="plant-svg" viewBox="0 0 340 420" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pot -->
+          <ellipse cx="170" cy="370" rx="80" ry="18" fill="rgba(255,255,255,0.15)"/>
+          <path d="M110 310 Q108 370 130 380 L210 380 Q232 370 230 310 Z" fill="url(#potGrad)"/>
+          <ellipse cx="170" cy="310" rx="62" ry="14" fill="url(#potTop)"/>
+          <!-- Soil -->
+          <ellipse cx="170" cy="310" rx="58" ry="11" fill="#2d5a3d"/>
+          <ellipse cx="170" cy="309" rx="52" ry="8" fill="#356b49"/>
+
+          <!-- Stem center tall -->
+          <path d="M170 308 Q168 260 170 200 Q172 150 168 110" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+          <!-- Stem left -->
+          <path d="M170 290 Q140 260 118 230 Q105 210 100 185" stroke="url(#stemGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+          <!-- Stem right -->
+          <path d="M170 280 Q200 250 220 220 Q234 200 238 172" stroke="url(#stemGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+          <!-- Stem far left -->
+          <path d="M165 300 Q130 275 108 248 Q90 225 82 195" stroke="url(#stemGrad)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+          <!-- Stem far right -->
+          <path d="M175 295 Q208 268 228 242 Q248 218 254 188" stroke="url(#stemGrad)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+          <!-- BIG LEAVES -->
+          <!-- Center leaf top -->
+          <ellipse cx="168" cy="92" rx="28" ry="52" fill="url(#leaf1)" transform="rotate(-5 168 92)"/>
+          <line x1="168" y1="140" x2="168" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+
+          <!-- Left main leaf -->
+          <ellipse cx="98" cy="170" rx="22" ry="42" fill="url(#leaf2)" transform="rotate(-38 98 170)"/>
+          <line x1="110" y1="205" x2="86" y2="142" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+
+          <!-- Right main leaf -->
+          <ellipse cx="240" cy="158" rx="22" ry="42" fill="url(#leaf3)" transform="rotate(38 240 158)"/>
+          <line x1="228" y1="193" x2="252" y2="128" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+
+          <!-- Far left leaf -->
+          <ellipse cx="80" cy="178" rx="18" ry="36" fill="url(#leaf4)" transform="rotate(-52 80 178)"/>
+
+          <!-- Far right leaf -->
+          <ellipse cx="256" cy="166" rx="18" ry="36" fill="url(#leaf5)" transform="rotate(52 256 166)"/>
+
+          <!-- Small accent leaves -->
+          <ellipse cx="150" cy="115" rx="10" ry="22" fill="url(#leaf6)" transform="rotate(-20 150 115)"/>
+          <ellipse cx="188" cy="108" rx="10" ry="22" fill="url(#leaf7)" transform="rotate(18 188 108)"/>
+
+          <!-- Sparkles / dewdrops -->
+          <circle cx="108" cy="155" r="3" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="240" cy="140" r="3" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="168" cy="78" r="2.5" fill="rgba(255,255,255,0.8)"/>
+          <circle cx="82" cy="175" r="2" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="254" cy="162" r="2" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="145" cy="100" r="1.8" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="192" cy="95" r="1.8" fill="rgba(255,255,255,0.7)"/>
+
+          <!-- Glow under pot -->
+          <ellipse cx="170" cy="378" rx="65" ry="10" fill="rgba(78,205,196,0.3)"/>
+
+          <defs>
+            <linearGradient id="potGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2a9d8f"/>
+              <stop offset="100%" stop-color="#1a5f57"/>
+            </linearGradient>
+            <linearGradient id="potTop" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3ab8a8"/>
+              <stop offset="100%" stop-color="#2a9d8f"/>
+            </linearGradient>
+            <linearGradient id="stemGrad" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#2a9d8f"/>
+              <stop offset="100%" stop-color="#4ecdc4"/>
+            </linearGradient>
+            <linearGradient id="leaf1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4ecdc4"/>
+              <stop offset="60%" stop-color="#2a9d8f"/>
+              <stop offset="100%" stop-color="#1a6b52"/>
+            </linearGradient>
+            <linearGradient id="leaf2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#56d8ce"/>
+              <stop offset="100%" stop-color="#1a7a6a"/>
+            </linearGradient>
+            <linearGradient id="leaf3" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#56d8ce"/>
+              <stop offset="100%" stop-color="#1a7a6a"/>
+            </linearGradient>
+            <linearGradient id="leaf4" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3ecfc5"/>
+              <stop offset="100%" stop-color="#186050"/>
+            </linearGradient>
+            <linearGradient id="leaf5" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3ecfc5"/>
+              <stop offset="100%" stop-color="#186050"/>
+            </linearGradient>
+            <linearGradient id="leaf6" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#72e8e0"/>
+              <stop offset="100%" stop-color="#2a9d8f"/>
+            </linearGradient>
+            <linearGradient id="leaf7" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#72e8e0"/>
+              <stop offset="100%" stop-color="#2a9d8f"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Ambient light glow under plant -->
+        <div class="plant-glow"></div>
+      </div>
+
+      <!-- Left side text -->
+      <div class="left-tagline">
+        <h2>Track Your <span>Carbon</span></h2>
+        <p>Join thousands of eco-conscious people reducing their footprint one day at a time.</p>
+        <div class="left-stats">
+          <div class="ls"><span>10K+</span><p>Users</p></div>
+          <div class="ls-divider"></div>
+          <div class="ls"><span>1.5M+</span><p>Trees saved</p></div>
+          <div class="ls-divider"></div>
+          <div class="ls"><span>60%</span><p>Avg reduction</p></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT — login/signup form -->
+    <div class="login-right">
+      <div class="form-card">
+
+        <!-- Brand mark -->
+        <div class="form-brand">
+          <img src="images/logo.png" alt="GreenWallet" class="form-logo">
+          <span>GreenWallet</span>
+        </div>
+
+        <!-- Tab switcher — Sign Up first -->
+        <div class="tabs">
+          <button class="tab active" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+          <button class="tab" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        </div>
+
+        <!-- Alert box -->
+        <div class="alert-box" id="alert-box"></div>
+
+        <!-- LOGIN FORM —hidden by default -->
+        <form id="login-form" class="auth-form hidden" autocomplete="off">
+          <p class="form-sub">Welcome back! Track your green progress.</p>
+
+          <div class="input-group">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+            <span class="field-error" id="err-login-email"></span>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-lock"></i> Password</label>
+            <div class="pass-wrap">
+              <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+              <button type="button" class="eye-btn" onclick="togglePass('login-password', this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <span class="field-error" id="err-login-pass"></span>
+          </div>
+
+          <div class="form-row">
+            <label class="remember-label">
+              <input type="checkbox" id="remember"> Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="submit-btn" id="login-submit">
+            <span class="btn-text">Sign In</span>
+            <i class="fas fa-arrow-right btn-icon"></i>
+          </button>
+        </form>
+
+        <!-- SIGNUP FORM — shown by default -->
+        <form id="signup-form" class="auth-form" autocomplete="off">
+          <p class="form-sub">Create your account and start your green journey.</p>
+
+          <div class="input-group">
+            <label><i class="fas fa-user"></i> Full Name</label>
+            <input type="text" id="signup-name" placeholder="Your full name" autocomplete="name">
+            <span class="field-error" id="err-signup-name"></span>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email">
+            <span class="field-error" id="err-signup-email"></span>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-lock"></i> Password</label>
+            <div class="pass-wrap">
+              <input type="password" id="signup-password" placeholder="Min. 6 characters" autocomplete="new-password">
+              <button type="button" class="eye-btn" onclick="togglePass('signup-password', this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="strength-bar" id="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-label" id="strength-label"></span>
+            <span class="field-error" id="err-signup-pass"></span>
+          </div>
+
+          <button type="submit" class="submit-btn" id="signup-submit">
+            <span class="btn-text">Create Account</span>
+            <i class="fas fa-leaf btn-icon"></i>
+          </button>
+        </form>
+
+        <!-- DIVIDER -->
+        <div class="divider"><span>or continue with</span></div>
+
+        <!-- GOOGLE BUTTON -->
+        <button class="google-btn" id="google-btn">
+          <svg class="google-icon" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <!-- Switch text -->
+        <p class="switch-text" id="switch-text">
+          Already have an account? <a href="#" onclick="switchTab('login'); return false;">Sign in →</a>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenWallet | About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="about.css">
+  <script src="api.js"></script>
+   <script src="navbar-auth.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link">Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="login.html" class="btn-login">Login</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="container hero-inner">
+
+      <!-- LEFT TEXT -->
+      <div class="hero-text">
+        <span class="hero-eyebrow"><i class="fas fa-leaf"></i> About GreenWallet</span>
+        <h1>Track Your Carbon.<br><span>Grow Your Impact.</span><br>Build Better Habits.</h1>
+        <p>GreenWallet makes understanding your carbon footprint simple, beautiful, and actionable — with real data, AI-powered tips, and a virtual forest that grows as you improve.</p>
+        <div class="hero-btns">
+          <a href="carbon-calculator.html" class="btn-primary">Start Tracking →</a>
+          <a href="#mission" class="btn-ghost">Learn More</a>
+        </div>
+        <!-- Inline mini stats row -->
+        <div class="hero-stats-row">
+          <div class="hsr-item">
+            <strong>10K+</strong><span>Users</span>
+          </div>
+          <div class="hsr-divider"></div>
+          <div class="hsr-item">
+            <strong>1.5M+</strong><span>Trees Saved</span>
+          </div>
+          <div class="hsr-divider"></div>
+          <div class="hsr-item">
+            <strong>60%</strong><span>Avg Reduction</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT — animated SVG forest scene -->
+      <div class="hero-visual">
+        <svg class="forest-svg" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(78,205,196,0.08)"/>
+              <stop offset="100%" stop-color="rgba(26,95,87,0.0)"/>
+            </linearGradient>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4ecdc4"/>
+              <stop offset="100%" stop-color="#1a5f57"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#56d8ce"/>
+              <stop offset="100%" stop-color="#2a9d8f"/>
+            </linearGradient>
+            <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#72e8e0"/>
+              <stop offset="100%" stop-color="#2a9d8f"/>
+            </linearGradient>
+            <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2a9d8f" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#1a5f57" stop-opacity="0.15"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Ground -->
+          <ellipse cx="240" cy="355" rx="220" ry="22" fill="url(#ground)"/>
+
+          <!-- === BIG TREE CENTER === -->
+          <!-- trunk -->
+          <rect x="228" y="240" width="24" height="115" rx="8" fill="#1a5f57"/>
+          <!-- canopy layers -->
+          <polygon points="240,60 290,180 190,180" fill="url(#g1)" opacity="0.95"/>
+          <polygon points="240,95 298,205 182,205" fill="url(#g2)" opacity="0.9"/>
+          <polygon points="240,130 306,240 174,240" fill="url(#g1)" opacity="0.85"/>
+
+          <!-- === TREE LEFT === -->
+          <rect x="110" y="265" width="16" height="90" rx="6" fill="#1a5f57"/>
+          <polygon points="118,115 158,215 78,215" fill="url(#g2)" opacity="0.9"/>
+          <polygon points="118,150 165,240 71,240" fill="url(#g1)" opacity="0.85"/>
+          <polygon points="118,185 170,265 66,265" fill="url(#g2)" opacity="0.8"/>
+
+          <!-- === TREE RIGHT === -->
+          <rect x="354" y="265" width="16" height="90" rx="6" fill="#1a5f57"/>
+          <polygon points="362,115 402,215 322,215" fill="url(#g3)" opacity="0.9"/>
+          <polygon points="362,150 409,240 315,240" fill="url(#g2)" opacity="0.85"/>
+          <polygon points="362,185 414,265 310,265" fill="url(#g1)" opacity="0.8"/>
+
+          <!-- === SMALL SHRUB LEFT === -->
+          <rect x="60" y="310" width="10" height="45" rx="4" fill="#1a5f57"/>
+          <circle cx="65" cy="295" r="28" fill="url(#g2)" opacity="0.85"/>
+          <circle cx="48" cy="308" r="20" fill="url(#g1)" opacity="0.8"/>
+          <circle cx="82" cy="308" r="20" fill="url(#g1)" opacity="0.8"/>
+
+          <!-- === SMALL SHRUB RIGHT === -->
+          <rect x="410" y="310" width="10" height="45" rx="4" fill="#1a5f57"/>
+          <circle cx="415" cy="295" r="28" fill="url(#g3)" opacity="0.85"/>
+          <circle cx="398" cy="308" r="20" fill="url(#g2)" opacity="0.8"/>
+          <circle cx="432" cy="308" r="20" fill="url(#g2)" opacity="0.8"/>
+
+          <!-- === TINY SEEDLINGS === -->
+          <rect x="165" y="332" width="6" height="24" rx="3" fill="#2a9d8f"/>
+          <ellipse cx="168" cy="325" rx="12" ry="16" fill="url(#g3)" opacity="0.9"/>
+          <rect x="305" y="332" width="6" height="24" rx="3" fill="#2a9d8f"/>
+          <ellipse cx="308" cy="325" rx="12" ry="16" fill="url(#g2)" opacity="0.9"/>
+
+          <!-- Sparkle dots (dewdrops / stars) -->
+          <circle cx="240" cy="52" r="3" fill="rgba(255,255,255,0.7)"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="118" cy="108" r="2.5" fill="rgba(255,255,255,0.65)"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="362" cy="108" r="2.5" fill="rgba(255,255,255,0.65)"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="290" cy="78" r="2" fill="rgba(78,205,196,0.9)"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="4s" repeatCount="indefinite"/></circle>
+          <circle cx="192" cy="85" r="2" fill="rgba(78,205,196,0.9)"><animate attributeName="opacity" values="0.6;1;0.6" dur="3.5s" repeatCount="indefinite"/></circle>
+
+          <!-- Floating leaves (animated) -->
+          <g class="leaf-float-1"><ellipse cx="50" cy="200" rx="7" ry="12" fill="#4ecdc4" opacity="0.6" transform="rotate(-30 50 200)"><animateTransform attributeName="transform" type="translate" values="0 0; 8 -30; 5 -70; -3 -110" dur="6s" repeatCount="indefinite"/></ellipse></g>
+          <g class="leaf-float-2"><ellipse cx="420" cy="240" rx="6" ry="10" fill="#4ecdc4" opacity="0.5" transform="rotate(25 420 240)"><animateTransform attributeName="transform" type="translate" values="0 0; -6 -25; -2 -60; 4 -100" dur="7.5s" repeatCount="indefinite" begin="2s"/></ellipse></g>
+          <g class="leaf-float-3"><ellipse cx="170" cy="280" rx="5" ry="9" fill="#72e8e0" opacity="0.55" transform="rotate(-15 170 280)"><animateTransform attributeName="transform" type="translate" values="0 0; 5 -20; 10 -55; 3 -95" dur="8s" repeatCount="indefinite" begin="1s"/></ellipse></g>
+        </svg>
+
+        <!-- CO2 badge floating over forest -->
+        <div class="forest-badge badge-co2">
+          <i class="fas fa-cloud"></i>
+          <div><strong>2.74 kg</strong><span>Pak avg/day</span></div>
+        </div>
+        <div class="forest-badge badge-trees">
+          <i class="fas fa-tree"></i>
+          <div><strong>22 kg</strong><span>CO₂ per tree/yr</span></div>
+        </div>
+        <div class="forest-badge badge-goal">
+          <i class="fas fa-bullseye"></i>
+          <div><strong>5.0 kg</strong><span>your daily goal</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-hint"><i class="fas fa-chevron-down"></i></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       LIVE IMPACT — pulls from localStorage
+  ═══════════════════════════════════════ -->
+  <section class="impact-section">
+    <div class="container">
+      <div class="section-label"><i class="fas fa-bolt"></i> Real Impact</div>
+      <h2 class="section-title">Numbers That Actually Matter</h2>
+      <p class="section-sub">These stats update from your own data — every calculation you save contributes to this.</p>
+      <div class="impact-grid">
+        <div class="impact-card teal reveal">
+          <div class="impact-icon"><i class="fas fa-calculator"></i></div>
+          <div class="impact-num" id="stat-calcs">0</div>
+          <div class="impact-label">Calculations Made</div>
+          <div class="impact-note">on this device</div>
+        </div>
+        <div class="impact-card green reveal">
+          <div class="impact-icon"><i class="fas fa-tree"></i></div>
+          <div class="impact-num" id="stat-trees">0</div>
+          <div class="impact-label">Trees Equivalent</div>
+          <div class="impact-note">yearly offset needed</div>
+        </div>
+        <div class="impact-card amber reveal">
+          <div class="impact-icon"><i class="fas fa-cloud"></i></div>
+          <div class="impact-num" id="stat-co2">0 kg</div>
+          <div class="impact-label">CO₂ Tracked</div>
+          <div class="impact-note">total across entries</div>
+        </div>
+        <div class="impact-card blue reveal">
+          <div class="impact-icon"><i class="fas fa-flag"></i></div>
+          <div class="impact-num" id="stat-vs">—</div>
+          <div class="impact-label">vs Pakistan Avg</div>
+          <div class="impact-note">your personal benchmark</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       MISSION
+  ═══════════════════════════════════════ -->
+  <section class="mission-section">
+    <div class="container mission-inner">
+      <div class="mission-text reveal">
+        <div class="section-label"><i class="fas fa-bullseye"></i> Our Mission</div>
+        <h2>Making Carbon Awareness <span>Simple & Beautiful</span></h2>
+        <p>We built GreenWallet because we believe awareness is the first step toward change. Most people don't know their carbon footprint — not because they don't care, but because the tools are complicated or boring.</p>
+        <p>We changed that. GreenWallet turns your daily habits into clear numbers, beautiful charts, and actionable tips — so reducing your impact feels achievable, not overwhelming.</p>
+        <div class="mission-pillars">
+          <div class="pillar">
+            <span class="pillar-icon">📊</span>
+            <div><strong>Track</strong><p>Log daily activities in seconds</p></div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">💡</span>
+            <div><strong>Learn</strong><p>Understand what drives your footprint</p></div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🌱</span>
+            <div><strong>Improve</strong><p>Take action with AI-powered tips</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="mission-visual reveal">
+        <div class="mission-quote-card">
+          <div class="quote-mark">"</div>
+          <p>The greatest threat to our planet is the belief that someone else will save it.</p>
+          <div class="quote-author">
+            <div class="author-avatar">RS</div>
+            <div><strong>Robert Swan</strong><span>Polar Explorer & Environmentalist</span></div>
+          </div>
+        </div>
+        <div class="mission-facts">
+          <div class="fact-item">
+            <i class="fas fa-globe-asia"></i>
+            <span>Pakistan emits <strong>2.74 kg CO₂</strong> per person per day</span>
+          </div>
+          <div class="fact-item">
+            <i class="fas fa-temperature-high"></i>
+            <span>The world needs a <strong>45% reduction</strong> by 2030</span>
+          </div>
+          <div class="fact-item">
+            <i class="fas fa-seedling"></i>
+            <span>One tree absorbs <strong>22 kg CO₂</strong> per year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FAQ
+  ═══════════════════════════════════════ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-label center"><i class="fas fa-question-circle"></i> FAQ</div>
+      <h2 class="section-title center">Common <span>Questions</span></h2>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How accurate are the CO₂ calculations?</span>
+            <i class="fas fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-a">
+            <p>Our emission factors are based on internationally recognized data sources. Car travel uses 0.12 kg CO₂/km, electricity uses Pakistan's grid average of 0.4 kg CO₂/kWh, and meal calculations account for diet type (vegan, vegetarian, mixed, or meat-heavy). While these are averages and individual results may vary slightly, they provide a reliable baseline for understanding your impact.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Is my data private?</span>
+            <i class="fas fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-a">
+            <p>Yes — completely. All your data is stored locally in your browser's localStorage. Nothing is sent to any server. Your calculations, history, and profile settings never leave your device. This also means your data is specific to the browser you use.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How does the AI eco tip work?</span>
+            <i class="fas fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-a">
+            <p>After you calculate your footprint, GreenWallet sends your anonymous data (your kg values per category, diet type, and comparison to Pakistan average) to Anthropic's Claude API. Claude generates a personalized action plan referencing your actual numbers — not generic advice. The API call is made directly from your browser.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What does "trees equivalent" mean?</span>
+            <i class="fas fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-a">
+            <p>A mature tree absorbs approximately 22 kg of CO₂ per year. We multiply your daily footprint by 365 to get your annual CO₂, then divide by 22 to show how many trees would be needed to offset it. It's a relatable way to understand the scale of your impact.</p>
+          </div>
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CTA
+  ═══════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card reveal">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+        <div class="cta-inner">
+          <span class="cta-eyebrow">🌱 Join the movement</span>
+          <h2>Ready to Start Your<br><span>Green Journey?</span></h2>
+          <p>Calculate your footprint in 60 seconds. Get personalized tips. Watch your forest grow.</p>
+          <div class="cta-btns">
+            <a href="carbon-calculator.html" class="btn-primary-lg">Calculate Now →</a>
+            <a href="login.html" class="btn-ghost-lg">Create Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+ <footer class="footer footer-rounded
+ ">
+  <div class="container footer-container">
+    
+    <!-- Logo + Tagline -->
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <p class="tagline">Track. Reduce. Inspire. Grow Your Forest.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-links">
+      <div class="link-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Team</a></li>
+          <li><a href="about.html">Careers</a></li>
+          <li><a href="index.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="link-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="about.html">Help Center</a></li>
+          <li><a href="about.html">FAQ</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="link-col social">
+        <h4>Connect</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-col">
+      <h4>Stay Green</h4>
+      <p>Get eco tips & updates weekly.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+  <script src="about.js"></script>
+</body>
+</html>

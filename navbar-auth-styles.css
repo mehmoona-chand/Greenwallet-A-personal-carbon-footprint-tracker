@@ -1,0 +1,57 @@
+/* ─────────────────────────────────────────────
+   NAVBAR AUTH STYLES
+   ADD these lines to the bottom of styles.css
+   (and also to login.css, dashboard.css etc.)
+   ───────────────────────────────────────────── */
+
+/* User info shown in navbar when logged in */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Green circle with user initials */
+.nav-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2a9d8f, #1a5f57);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: default;
+}
+
+/* First name shown next to avatar */
+.nav-username {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Logout icon button */
+.nav-logout-btn {
+  background: transparent;
+  border: 1.5px solid rgba(224, 80, 80, 0.3);
+  color: #e05050;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+
+.nav-logout-btn:hover {
+  background: #fdf0f0;
+  border-color: #e05050;
+  transform: scale(1.08);
+}

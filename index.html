@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GreenWallet | Track Your Carbon Footprint</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="api.js"></script>
+  <script src="navbar-auth.js"></script>
+
+  <style>
+    /* ── BLOG MODAL OVERLAY ── */
+    .blog-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 40, 35, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 20px;
+    }
+    .blog-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .blog-modal {
+      background: #fff;
+      border-radius: 28px;
+      max-width: 680px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(10, 40, 35, 0.35);
+      transform: translateY(40px) scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .blog-modal-overlay.open .blog-modal {
+      transform: translateY(0) scale(1);
+    }
+    .blog-modal-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+    .blog-modal-body {
+      padding: 32px 36px 36px;
+    }
+    .blog-modal-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #2a9d8f, #4ecdc4);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    .blog-modal-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a5f57;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .blog-modal-meta {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .blog-modal-meta i { color: #2a9d8f; }
+    .blog-modal-text {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.8;
+    }
+    .blog-modal-text p { margin-bottom: 16px; }
+    .blog-modal-text h4 {
+      color: #1a5f57;
+      font-weight: 600;
+      margin: 20px 0 8px;
+    }
+    .blog-modal-text ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .blog-modal-text ul li {
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .blog-modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    .blog-modal-close {
+      background: linear-gradient(135deg, #2a9d8f, #1a5f57);
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .blog-modal-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(42,157,143,0.35);
+    }
+    .blog-modal-cta {
+      color: #2a9d8f;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .blog-modal-cta:hover { color: #1a5f57; }
+
+    /* ── TEASER CARD CLICK CURSOR ── */
+    .teaser-card {
+      cursor: pointer;
+      position: relative;
+    }
+    .teaser-card::after {
+      content: 'Read Article';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,95,87,0.92), transparent);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 28px 16px 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .teaser-card:hover::after { opacity: 1; }
+
+    /* ── NEWSLETTER FIX: show success ── */
+    .newsletter-success {
+      color: #e9f5db;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ULTRA PRO 3D GLOWING GLOBE REVEAL -->
+  <div class="globe-container">
+    <img src="images/earth.png" alt="Earth" class="globe" />
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet Logo" class="logo-img" />
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#" class="nav-link active">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link">Carbon Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="login.html" class="btn-login">Login</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero hero-full-rounded">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>Track Your <span>Personal Carbon Footprint</span></h1>
+        <p>Measure your daily impact and start building a greener future with GreenWallet.</p>
+        <div class="hero-buttons">
+          <a href="carbon-calculator.html" class="btn primary">Start Tracking</a>
+          <a href="features.html" class="btn secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <h3>CO₂ saved this month</h3>
+          <p class="stat-value">32<span>kg</span></p>
+          <p class="stat-label">Trees Equivalent</p>
+          <p class="stat-trees">1.4 <i class="fas fa-tree"></i></p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- WHY SECTION -->
+  <section class="why-section">
+    <div class="container">
+      <h2>Why GreenWallet?</h2>
+      <div class="why-content">
+        <div class="why-text">
+          <p>GreenWallet helps individuals measure and reduce their carbon footprint through simple tracking tools and personalized insights. Every action counts — turn awareness into real-world change. We combine smart technology with environmental responsibility so you can track, analyze, and reduce your carbon emissions effortlessly while earning insights that inspire sustainable living.</p>
+        </div>
+        <div class="why-image">
+          <img src="images/leaf-progress.png" alt="Growing Leaf Progress" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step step-card">
+          <div class="step-icon"><i class="fas fa-bus"></i></div>
+          <h3>Add Your Daily Activities</h3>
+          <p>Enter transport, food, and energy details.</p>
+        </div>
+        <div class="step step-card">
+          <div class="step-icon"><i class="fas fa-calculator"></i></div>
+          <h3>Track Carbon Footprint</h3>
+          <p>Our system calculates your CO₂ impact instantly.</p>
+        </div>
+        <div class="step step-card">
+          <div class="step-icon"><i class="fas fa-trophy"></i></div>
+          <h3>Reduce &amp; Earn Rewards</h3>
+          <p>Get tips, earn green points, and grow your forest.</p>
+        </div>
+      </div>
+      <div class="step-connector">
+        <div class="line"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="container">
+      <h2 class="section-tagline">Learn. Act. Inspire.</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>1.5M+</h3>
+          <p>Trees Saved</p>
+        </div>
+        <div class="stat-item">
+          <h3>60%</h3>
+          <p>Carbon Reduction Goal</p>
+        </div>
+        <div class="stat-item">
+          <h3>10K+</h3>
+          <p>Users Tracking Daily</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG SECTION -->
+  <section class="teaser-section">
+    <div class="container">
+      <h2 class="teaser-heading">Sustainable Living Blog</h2>
+      <div class="teaser-grid">
+
+        <div class="teaser-card" onclick="openBlog(0)">
+          <img src="images/bike.jpg" alt="Cycling" />
+          <h4>Top 5 Ways to Cut Daily Emissions</h4>
+        </div>
+
+        <div class="teaser-card" onclick="openBlog(1)">
+          <img src="images/woman.jpg" alt="Green Habits" />
+          <h4>Green Habits for City Living</h4>
+        </div>
+
+        <div class="teaser-card" onclick="openBlog(2)">
+          <img src="images/salad.jpg" alt="Food Carbon" />
+          <h4>Your Food's Hidden Carbon Cost</h4>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG MODAL -->
+  <div class="blog-modal-overlay" id="blog-modal-overlay" onclick="closeBlogIfOutside(event)">
+    <div class="blog-modal" id="blog-modal">
+      <img class="blog-modal-img" id="blog-modal-img" src="" alt="" />
+      <div class="blog-modal-body">
+        <span class="blog-modal-tag" id="blog-modal-tag"></span>
+        <h2 class="blog-modal-title" id="blog-modal-title"></h2>
+        <div class="blog-modal-meta" id="blog-modal-meta"></div>
+        <div class="blog-modal-text" id="blog-modal-text"></div>
+        <div class="blog-modal-footer">
+          <button class="blog-modal-close" onclick="closeBlog()"><i class="fas fa-times"></i> Close</button>
+          <a href="carbon-calculator.html" class="blog-modal-cta">Start Tracking Your Impact →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer footer-rounded">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+          <span>GreenWallet</span>
+        </div>
+        <p class="tagline">Track. Reduce. Inspire. Grow Your Forest.</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="carbon-calculator.html">Calculator</a></li>
+          </ul>
+        </div>
+        <div class="link-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="about.html">Help Center</a></li>
+            <li><a href="about.html">FAQ</a></li>
+            <li><a href="about.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="link-col social">
+          <h4>Connect</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/mehmoona-chand" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="newsletter-col">
+        <h4>Stay Green</h4>
+        <p>Get eco tips &amp; updates weekly.</p>
+        <form class="newsletter-form" id="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="newsletter-success" id="newsletter-success">🌿 Thanks! You're subscribed.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── BLOG DATA ────────────────────────────────────
+    const BLOGS = [
+      {
+        img: 'images/bike.jpg',
+        tag: 'Lifestyle',
+        title: 'Top 5 Ways to Cut Your Daily Emissions',
+        meta: '<i class="fas fa-calendar-alt"></i> June 2026 &nbsp;|&nbsp; <i class="fas fa-clock"></i> 4 min read',
+        content: `
+          <p>Every day, our choices shape the planet's future. The good news? Small, consistent changes can make a massive difference. Here are five practical ways to slash your daily carbon footprint:</p>
+          <h4>🚲 1. Switch to Active Transport</h4>
+          <p>Cycling or walking instead of driving just 3 days a week can save up to <strong>1.5 kg of CO₂</strong> per day. Your health and the planet both win.</p>
+          <h4>🥗 2. Eat More Plant-Based Meals</h4>
+          <p>Beef produces up to 27 kg of CO₂ per kg of meat. Replacing one beef meal per week with vegetables or legumes can save over <strong>300 kg of CO₂ per year</strong>.</p>
+          <h4>💡 3. Kill the Phantom Power</h4>
+          <p>Electronics on standby still consume electricity. Unplugging devices when not in use can cut your home energy use by up to <strong>10%</strong>.</p>
+          <h4>♻️ 4. Buy Less, Buy Better</h4>
+          <p>Fast fashion accounts for about 10% of global carbon emissions. Buying second-hand or choosing quality over quantity is one of the highest-impact changes you can make.</p>
+          <h4>🌡️ 5. Adjust Your Thermostat</h4>
+          <p>Lowering your heating by just 1°C can reduce your heating bill — and your emissions — by around <strong>10%</strong>. A small dial turn with a big planet impact.</p>
+          <p>Track all of these with GreenWallet's carbon calculator and watch your score improve week by week!</p>
+        `
+      },
+      {
+        img: 'images/woman.jpg',
+        tag: 'City Living',
+        title: 'Green Habits for City Living',
+        meta: '<i class="fas fa-calendar-alt"></i> May 2026 &nbsp;|&nbsp; <i class="fas fa-clock"></i> 3 min read',
+        content: `
+          <p>Living in a city doesn't mean you're stuck with a high carbon footprint. In fact, urban dwellers often have a smaller footprint than rural residents — if they make smart choices.</p>
+          <h4>🚇 Use Public Transit</h4>
+          <p>A single bus can take 50 cars off the road. Taking the metro or bus just once a day instead of driving saves an average of <strong>2.6 kg CO₂</strong> per trip.</p>
+          <h4>🛍️ Shop Local</h4>
+          <p>Food miles matter. Buying from local farmers' markets means your produce hasn't been flown across continents. Local food can have up to <strong>50x less</strong> transport emissions.</p>
+          <h4>🌿 Green Your Space</h4>
+          <p>Even a small balcony garden helps. Plants improve air quality and connect you mentally to nature, which research suggests increases pro-environmental behaviour.</p>
+          <h4>💧 Reduce Water Waste</h4>
+          <ul>
+            <li>Fix dripping taps — a dripping tap wastes 15 litres per day</li>
+            <li>Take shorter showers — 4 minutes instead of 10 saves 50 litres</li>
+            <li>Use a dishwasher instead of hand washing (yes, really — it's more efficient!)</li>
+          </ul>
+          <p>City life is full of eco-opportunities. Log your habits daily on GreenWallet and see where your green score stands!</p>
+        `
+      },
+      {
+        img: 'images/salad.jpg',
+        tag: 'Food & Diet',
+        title: "Your Food's Hidden Carbon Cost",
+        meta: '<i class="fas fa-calendar-alt"></i> April 2026 &nbsp;|&nbsp; <i class="fas fa-clock"></i> 5 min read',
+        content: `
+          <p>What's on your plate has a bigger climate impact than most people realise. Food systems are responsible for roughly a quarter of global greenhouse gas emissions — and what you eat matters enormously.</p>
+          <h4>🥩 The Meat Problem</h4>
+          <p>Beef is the most carbon-intensive food on Earth. Producing 1 kg of beef generates around <strong>27 kg of CO₂ equivalent</strong> — compared to just 2 kg for chicken and 0.9 kg for lentils. Ruminant animals produce methane, a greenhouse gas 25x more potent than CO₂.</p>
+          <h4>🌊 What About Fish?</h4>
+          <p>Fish is generally lower-carbon than beef or lamb, but wild-caught fish using trawling methods can still carry significant emissions from fuel. Farmed shellfish and mussels are among the lowest-carbon proteins available.</p>
+          <h4>🥬 The Plant-Based Advantage</h4>
+          <ul>
+            <li>Lentils: 0.9 kg CO₂ per kg</li>
+            <li>Tofu: 2 kg CO₂ per kg</li>
+            <li>Chicken: 6 kg CO₂ per kg</li>
+            <li>Beef: 27 kg CO₂ per kg</li>
+          </ul>
+          <h4>🍞 Don't Forget Food Waste</h4>
+          <p>About one-third of all food produced globally is wasted. When food rots in landfill, it releases methane. Planning meals, storing food correctly, and composting are all high-impact habits.</p>
+          <p>Use GreenWallet's food tracking feature to log your meals and discover exactly how your diet is affecting the planet — and how to improve it.</p>
+        `
+      }
+    ];
+
+    function openBlog(index) {
+      const b = BLOGS[index];
+      document.getElementById('blog-modal-img').src = b.img;
+      document.getElementById('blog-modal-img').alt = b.title;
+      document.getElementById('blog-modal-tag').textContent = b.tag;
+      document.getElementById('blog-modal-title').textContent = b.title;
+      document.getElementById('blog-modal-meta').innerHTML = b.meta;
+      document.getElementById('blog-modal-text').innerHTML = b.content;
+      document.getElementById('blog-modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBlog() {
+      document.getElementById('blog-modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeBlogIfOutside(e) {
+      if (e.target === document.getElementById('blog-modal-overlay')) closeBlog();
+    }
+
+    // Close with Escape key
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlog(); });
+
+    // ── NEWSLETTER FORM FIX ──────────────────────────
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('newsletter-success').style.display = 'block';
+    });
+
+    // ── NAVBAR SCROLL EFFECT ─────────────────────────
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── HAMBURGER ────────────────────────────────────
+    document.querySelector('.hamburger').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.querySelector('.nav-menu').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

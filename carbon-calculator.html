@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenWallet | Carbon Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="carbon-calculator.css">
+  <script src="api.js"></script>
+  <script src="carbon-calculator.js"></script>
+   <script src="navbar-auth.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet Logo" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link active">Carbon Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="login.html" class="btn-login">Login</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="calc-hero">
+    <div class="container">
+      <p class="hero-eyebrow"><i class="fas fa-leaf"></i> Environmental Impact</p>
+      <h1>Calculate Your <span>Carbon Footprint</span></h1>
+      <p class="hero-sub">Enter your daily habits below and get your CO₂ score, tree equivalent, and AI-powered personalized tips instantly.</p>
+    </div>
+  </section>
+
+  <!-- MAIN CALCULATOR -->
+  <section class="calculator">
+    <div class="container">
+      <div class="calc-layout">
+
+        <!-- LEFT: FORM -->
+        <div class="form-side">
+          <div class="form-card">
+            <div class="form-card-header">
+              <h2>Your Daily Activities</h2>
+              <p>Fill in what applies to you — leave blank if not applicable</p>
+            </div>
+
+            <form id="carbon-form">
+
+              <!-- Transport -->
+              <div class="form-section">
+                <div class="section-label"><i class="fas fa-road"></i> Transport</div>
+
+                <div class="input-group">
+                  <label for="car">
+                    <i class="fas fa-car"></i> Car Travel
+                    <span class="input-hint">km per day</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="car" placeholder="e.g. 30" min="0" max="2000" step="0.1">
+                    <span class="input-unit">km</span>
+                  </div>
+                  <span class="error-msg" id="err-car"></span>
+                </div>
+
+                <div class="input-group">
+                  <label for="public">
+                    <i class="fas fa-bus"></i> Public Transport
+                    <span class="input-hint">km per day</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="public" placeholder="e.g. 20" min="0" max="2000" step="0.1">
+                    <span class="input-unit">km</span>
+                  </div>
+                  <span class="error-msg" id="err-public"></span>
+                </div>
+
+                <div class="input-group">
+                  <label for="flights">
+                    <i class="fas fa-plane"></i> Flights
+                    <span class="input-hint">per year</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="flights" placeholder="e.g. 2" min="0" max="365" step="1">
+                    <span class="input-unit">flights/yr</span>
+                  </div>
+                  <span class="error-msg" id="err-flights"></span>
+                </div>
+              </div>
+
+              <!-- Home -->
+              <div class="form-section">
+                <div class="section-label"><i class="fas fa-home"></i> Home & Energy</div>
+
+                <div class="input-group">
+                  <label for="electricity">
+                    <i class="fas fa-bolt"></i> Electricity
+                    <span class="input-hint">kWh per day</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="electricity" placeholder="e.g. 10" min="0" max="500" step="0.1">
+                    <span class="input-unit">kWh</span>
+                  </div>
+                  <span class="error-msg" id="err-electricity"></span>
+                </div>
+
+                <div class="input-group">
+                  <label for="waste">
+                    <i class="fas fa-trash"></i> Waste Produced
+                    <span class="input-hint">kg per week</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="waste" placeholder="e.g. 5" min="0" max="200" step="0.1">
+                    <span class="input-unit">kg/wk</span>
+                  </div>
+                  <span class="error-msg" id="err-waste"></span>
+                </div>
+              </div>
+
+              <!-- Food -->
+              <div class="form-section">
+                <div class="section-label"><i class="fas fa-utensils"></i> Food</div>
+
+                <div class="input-group">
+                  <label for="meals">
+                    <i class="fas fa-drumstick-bite"></i> Meals per Day
+                    <span class="input-hint">including snacks</span>
+                  </label>
+                  <div class="input-wrap">
+                    <input type="number" id="meals" placeholder="e.g. 3" min="0" max="20" step="1">
+                    <span class="input-unit">meals</span>
+                  </div>
+                  <span class="error-msg" id="err-meals"></span>
+                </div>
+
+                <!-- Meal type selector — NEW -->
+                <div class="input-group">
+                  <label><i class="fas fa-seedling"></i> Diet Type <span class="input-hint">affects CO₂ calculation</span></label>
+                  <div class="diet-options">
+                    <label class="diet-option">
+                      <input type="radio" name="diet" value="1.0" checked>
+                      <span>🥩 Meat-heavy</span>
+                    </label>
+                    <label class="diet-option">
+                      <input type="radio" name="diet" value="0.7">
+                      <span>🍗 Mixed</span>
+                    </label>
+                    <label class="diet-option">
+                      <input type="radio" name="diet" value="0.4">
+                      <span>🥗 Vegetarian</span>
+                    </label>
+                    <label class="diet-option">
+                      <input type="radio" name="diet" value="0.25">
+                      <span>🌱 Vegan</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="calculate-btn" id="calculate-btn">
+                <i class="fas fa-calculator"></i> Calculate My Footprint
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT: LIVE PREVIEW + RESULTS -->
+        <div class="result-side">
+
+          <!-- Live mini bar chart — updates as user types -->
+          <div class="live-preview" id="live-preview">
+            <div class="preview-header">
+              <span class="preview-label">Live preview</span>
+              <span class="preview-total" id="preview-total">0.00 kg CO₂/day</span>
+            </div>
+            <div class="preview-bars" id="preview-bars">
+              <div class="preview-bar-row" data-cat="car">
+                <span class="bar-icon">🚗</span>
+                <span class="bar-name">Car</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+              <div class="preview-bar-row" data-cat="public">
+                <span class="bar-icon">🚌</span>
+                <span class="bar-name">Transit</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+              <div class="preview-bar-row" data-cat="meals">
+                <span class="bar-icon">🍽️</span>
+                <span class="bar-name">Food</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+              <div class="preview-bar-row" data-cat="electricity">
+                <span class="bar-icon">⚡</span>
+                <span class="bar-name">Electricity</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+              <div class="preview-bar-row" data-cat="flights">
+                <span class="bar-icon">✈️</span>
+                <span class="bar-name">Flights</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+              <div class="preview-bar-row" data-cat="waste">
+                <span class="bar-icon">🗑️</span>
+                <span class="bar-name">Waste</span>
+                <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                <span class="bar-val">0.00</span>
+              </div>
+            </div>
+            <div class="preview-hint">← Fill in the form to see your breakdown</div>
+          </div>
+
+          <!-- Results (shown after calculate) -->
+          <div id="result" class="result-card hidden">
+
+            <!-- Score -->
+            <div class="result-score">
+              <div class="score-circle" id="score-circle">
+                <div class="score-inner">
+                  <span class="score-num" id="total-co2-display">0</span>
+                  <span class="score-unit">kg CO₂/day</span>
+                </div>
+              </div>
+              <div class="score-info">
+                <div class="score-grade" id="score-grade">Calculating...</div>
+                <div class="score-compare" id="score-compare"></div>
+                <div class="trees-equiv">
+                  <i class="fas fa-tree"></i>
+                  <span id="trees">0</span> trees needed/yr to offset
+                </div>
+              </div>
+            </div>
+
+            <!-- Static tips (instant) -->
+            <div class="tips-section">
+              <h3><i class="fas fa-lightbulb"></i> Quick Tips</h3>
+              <ul id="tip-text" class="tips-list"></ul>
+            </div>
+
+            <!-- AI Tips (async) -->
+            <div class="ai-tips-section" id="ai-tips-section">
+              <div class="ai-header">
+                <div class="ai-badge"><i class="fas fa-robot"></i> AI-Powered</div>
+                <h3>Personalized Eco Plan</h3>
+                <p>Generated just for your lifestyle by Claude AI</p>
+              </div>
+              <div id="ai-loading" class="ai-loading">
+                <div class="ai-spinner"></div>
+                <span>Claude is analyzing your footprint...</span>
+              </div>
+              <div id="ai-response" class="ai-response"></div>
+            </div>
+
+            <!-- Save button -->
+            <button id="save-btn" class="save-btn">
+              <i class="fas fa-floppy-disk"></i> Save to Dashboard
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+ <footer class="footer footer-rounded
+ ">
+  <div class="container footer-container">
+    
+    <!-- Logo + Tagline -->
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <p class="tagline">Track. Reduce. Inspire. Grow Your Forest.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-links">
+      <div class="link-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Team</a></li>
+          <li><a href="about.html">Careers</a></li>
+          <li><a href="index.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="link-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="about.html">Help Center</a></li>
+          <li><a href="about.html">FAQ</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="link-col social">
+        <h4>Connect</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-col">
+      <h4>Stay Green</h4>
+      <p>Get eco tips & updates weekly.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+  <script src="carbon-calculator.js"></script>
+</body>
+</html>

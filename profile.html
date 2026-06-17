@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenWallet | My Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="profile.css">
+  <script src="api.js"></script>
+  <script src="navbar-auth.js"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+        <span>GreenWallet</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="carbon-calculator.html" class="nav-link">Calculator</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="profile.html" class="nav-link active">Profile</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="login.html" class="btn-login" id="logout-btn">Login</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <main class="profile-main">
+
+    <!-- PROFILE HERO -->
+    <div class="profile-hero">
+      <div class="hero-leaf">🌿</div>
+      <div class="profile-hero-inner">
+
+        <!-- Avatar with photo upload -->
+        <div class="avatar-wrap" onclick="document.getElementById('avatar-file-input').click()" title="Click to upload photo">
+          <div class="avatar-circle" id="avatar-circle">
+            <img id="avatar-photo" src="" alt="">
+            <span id="avatar-initials">?</span>
+          </div>
+          <div class="avatar-upload-hint">
+            <i class="fas fa-camera"></i>
+            <span>Change Photo</span>
+          </div>
+          <div class="avatar-level-badge" id="avatar-level">1</div>
+          <input type="file" id="avatar-file-input" accept="image/*">
+        </div>
+
+        <!-- Info -->
+        <div class="profile-hero-info">
+          <p class="profile-eyebrow"><i class="fas fa-leaf"></i> Carbon Tracker Profile</p>
+          <h1 id="user-name">Loading...</h1>
+          <p class="profile-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="user-location">Lahore, Pakistan</span>
+          </p>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-track">
+              <div class="xp-bar-fill" id="xp-fill"></div>
+            </div>
+            <div class="xp-labels">
+              <span class="xp-label" id="level-label">Level 1 · Eco Beginner</span>
+              <span class="xp-val" id="xp-text">0 / 700 XP</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="profile-hero-actions">
+          <button class="edit-btn" id="edit-btn"><i class="fas fa-pen"></i> Edit Profile</button>
+          <a href="carbon-calculator.html" class="track-btn"><i class="fas fa-plus"></i> Log Today</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="edit-modal">
+        <div class="modal-header">
+          <h3><i class="fas fa-user-edit"></i> Edit Profile</h3>
+          <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-field">
+            <label>Display Name</label>
+            <input type="text" id="edit-name" placeholder="Your name" maxlength="30">
+          </div>
+          <div class="modal-field">
+            <label>Location</label>
+            <input type="text" id="edit-location" placeholder="City, Country" maxlength="40">
+          </div>
+          <div class="modal-field">
+            <label>Daily CO₂ Goal (kg)</label>
+            <input type="number" id="edit-goal" placeholder="5.0" min="0.5" max="50" step="0.5">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-save" id="modal-save"><i class="fas fa-check"></i> Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-body">
+
+      <!-- TOP STATS -->
+      <div class="top-stats">
+        <div class="top-stat-card streak-card">
+          <div class="streak-flame">🔥</div>
+          <div class="streak-number" id="streak-num">0</div>
+          <div class="streak-label">Day Streak</div>
+        </div>
+        <div class="top-stat-card">
+          <div class="stat-icon-wrap"><i class="fas fa-cloud"></i></div>
+          <div class="top-stat-value" id="today-co2">—</div>
+          <div class="top-stat-label">Latest CO₂ (kg)</div>
+        </div>
+        <div class="top-stat-card">
+          <div class="stat-icon-wrap green"><i class="fas fa-tree"></i></div>
+          <div class="top-stat-value" id="total-saved">—</div>
+          <div class="top-stat-label">Total Entries</div>
+        </div>
+        <div class="top-stat-card">
+          <div class="stat-icon-wrap amber"><i class="fas fa-star"></i></div>
+          <div class="top-stat-value" id="total-xp">0</div>
+          <div class="top-stat-label">Total XP</div>
+        </div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="profile-grid">
+        <div class="left-col">
+
+          <!-- BADGES -->
+          <div class="card badges-card">
+            <div class="card-header">
+              <h2><i class="fas fa-medal"></i> Achievements</h2>
+              <span class="badge-count" id="badge-count">0 / 8 unlocked</span>
+            </div>
+            <div class="badges-grid" id="badges-grid"></div>
+          </div>
+
+          <!-- BREAKDOWN -->
+          <div class="card breakdown-card">
+            <div class="card-header">
+              <h2><i class="fas fa-chart-pie"></i> Latest Entry Breakdown</h2>
+              <span class="card-sub" id="breakdown-date">—</span>
+            </div>
+            <div class="breakdown-bars" id="breakdown-bars">
+              <div class="empty-breakdown">
+                <i class="fas fa-seedling"></i>
+                <p>No entries yet — <a href="carbon-calculator.html">calculate your footprint</a>!</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="right-col">
+
+          <!-- GOAL RING -->
+          <div class="card goals-card">
+            <div class="card-header">
+              <h2><i class="fas fa-bullseye"></i> Daily Goal</h2>
+              <span class="card-sub" id="goal-sub">Target: 5.0 kg/day</span>
+            </div>
+            <div class="goal-ring-wrap">
+              <svg class="goal-ring" viewBox="0 0 120 120">
+                <circle class="goal-ring-bg" cx="60" cy="60" r="50"/>
+                <circle class="goal-ring-fill" id="goal-ring-fill" cx="60" cy="60" r="50"/>
+              </svg>
+              <div class="goal-ring-center">
+                <span class="goal-pct" id="goal-pct">—</span>
+                <span class="goal-label">of goal used</span>
+              </div>
+            </div>
+            <p class="goal-verdict" id="goal-verdict">Log a calculation to see your progress!</p>
+          </div>
+
+          <!-- LEADERBOARD -->
+          <div class="card leaderboard-card">
+            <div class="card-header">
+              <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+              <span class="card-sub">This week's eco-champions</span>
+            </div>
+            <div class="leaderboard-note">
+              <i class="fas fa-info-circle"></i> Sample data — live rankings coming with backend
+            </div>
+            <div class="leaderboard-list" id="leaderboard-list"></div>
+            <div class="your-rank" id="your-rank"></div>
+          </div>
+
+          <!-- MINI CHART -->
+          <div class="card history-mini-card">
+            <div class="card-header">
+              <h2><i class="fas fa-chart-line"></i> Your CO₂ History</h2>
+              <span class="card-sub" id="history-count">0 entries</span>
+            </div>
+            <div class="mini-chart" id="mini-chart">
+              <div class="empty-breakdown" style="padding:24px 0;width:100%">
+                <i class="fas fa-chart-line"></i>
+                <p>No history yet</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer footer-rounded">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="images/logo.png" alt="GreenWallet" class="logo-img">
+          <span>GreenWallet</span>
+        </div>
+        <p class="tagline">Track. Reduce. Inspire. Grow Your Forest.</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="about.html">Team</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="index.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="link-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="about.html">Help Center</a></li>
+            <li><a href="about.html">FAQ</a></li>
+            <li><a href="about.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="link-col social">
+          <h4>Connect</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/mehmoona-chand" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="newsletter-col">
+        <h4>Stay Green</h4>
+        <p>Get eco tips &amp; updates weekly.</p>
+        <form class="newsletter-form" id="newsletter-form-profile">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="newsletter-success-profile" style="color:#e9f5db;font-size:0.88rem;margin-top:8px;display:none;">🌿 Thanks! You're subscribed.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('newsletter-form-profile').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('newsletter-success-profile').style.display = 'block';
+    });
+  </script>
+  <script src="profile.js"></script>
+</body>
+</html>
