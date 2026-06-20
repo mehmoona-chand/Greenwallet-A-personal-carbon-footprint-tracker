@@ -264,43 +264,7 @@ npm start
 
 ---
 
-## 📝 Commit History
 
-Real commit log from the repository (oldest → newest):
-
-| Date | Commit | Message |
-|------|--------|---------|
-| 2026-06-17 | `998d310` | Initial commit |
-| 2026-06-17 | `29c161f` | feat: initial frontend commit - all pages, styles, and assets |
-| 2026-06-17 | `1ddb6fe` | Merge branch 'main' of https://github.com/mehmoona-chand/greenwallet-frontend |
-| 2026-06-17 | `38815dc` | add README with project details |
-| 2026-06-17 | `aa8e83c` | screenshots/ |
-| 2026-06-17 | `e7e9761` | Add files via upload |
-| 2026-06-17 | `1d6b613` | update README with screenshots and full project details |
-| 2026-06-17 | `289a208` | add project screenshots |
-| 2026-06-17 | `16fe6bb` | remove duplicate screenshots |
-| 2026-06-17 | `9626462` | remove duplicate screenshots |
-| 2026-06-17 | `a4e1ee0` | remove duplicate screenshots |
-| 2026-06-17 | `379524f` | remove duplicate screenshots |
-| 2026-06-17 | `0284353` | remove duplicate screenshots |
-| 2026-06-18 | `bc50769` | remove duplicate screenshots |
-| 2026-06-18 | `e8949c0` | remove duplicate screenshots |
-| 2026-06-18 | `f7776be` | remove duplicate screenshots |
-| 2026-06-18 | `466998e` | remove duplicate screenshots |
-| 2026-06-18 | `aebd0fd` | remove duplicate screenshots |
-| 2026-06-18 | `aa898ba` | remove duplicate screenshots |
-| 2026-06-18 | `2c041b9` | remove duplicate screenshots |
-| 2026-06-18 | `efa76d5` | remove duplicate screenshots |
-| 2026-06-18 | `0cedbb9` | remove duplicate screenshots |
-| 2026-06-18 | `3bf3771` | remove duplicate screenshots |
-| 2026-06-18 | `dc4cfbb` | remove duplicate screenshots |
-| 2026-06-18 | `6bac858` | remove duplicate screenshots |
-| 2026-06-18 | `3abfa40` | remove duplicate screenshots |
-| 2026-06-18 | `093d5db` | remove duplicate screenshots |
-| 2026-06-19 | `13cf338` | Add backend |
-| 2026-06-19 | `176f690` | Merge branch 'main' of https://github.com/mehmoona-chand/greenwallet-frontend |
-| 2026-06-19 | `c29f018` | feat: connect frontend to live backend API |
-| 2026-06-20 | `efb4881` | fix: add frontend URL to CORS allowed origins |
 
 
 
