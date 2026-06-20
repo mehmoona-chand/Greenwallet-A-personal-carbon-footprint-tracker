@@ -11,12 +11,13 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Status](https://img.shields.io/badge/Status-Frontend_Complete-2a9d8f?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Full_Stack_Live-2a9d8f?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Educational-green?style=for-the-badge)
 
-[🌐 Live Demo](#) · [⚡ Quick Start](#-quick-start) · [📸 Screenshots](#-screenshots) · [🤝 Contribute](#-contributing)
-
-> ⚠️ Live demo coming soon — backend integration in progress!
+[🌐 Frontend (Live)](https://greenwallet-frontend-l4h2.onrender.com) · [🔧 Backend API (Live)](https://greenwallet-backend-nm7j.onrender.com) · [⚡ Quick Start](#-quick-start) · [📸 Screenshots](#-screenshots) · [🤝 Contribute](#-contributing)
 
 </div>
 
@@ -24,9 +25,20 @@
 
 ## 📌 About
 
-**GreenWallet** is a web application that helps users track their carbon footprint, monitor eco-friendly habits, and make more sustainable lifestyle choices every day. The platform combines personal analytics with environmental impact awareness to inspire greener decisions.
+**GreenWallet** is a full-stack web application that helps users track their carbon footprint, monitor eco-friendly habits, and make more sustainable lifestyle choices every day. The platform combines personal analytics with environmental impact awareness to inspire greener decisions.
 
-> 🌱 Frontend complete with vanilla HTML, CSS, and JavaScript. Backend (Node.js + MongoDB) coming soon.
+> 🌱 Frontend (HTML/CSS/JS) and backend (Node.js + Express + MongoDB) are both built and deployed live on Render.
+
+---
+
+## 🔗 Live Application
+
+| Service | URL |
+|---------|-----|
+| 🌐 Frontend | [greenwallet-frontend-l4h2.onrender.com](https://greenwallet-frontend-l4h2.onrender.com) |
+| 🔧 Backend API | [greenwallet-backend-nm7j.onrender.com](https://greenwallet-backend-nm7j.onrender.com) |
+
+> ⚠️ Note: Render free-tier services spin down when idle, so the first request after inactivity may take ~30–60 seconds to wake up.
 
 ---
 
@@ -39,7 +51,7 @@
 - Impact statistics — Trees Saved, Carbon Reduction Goal, Daily Users
 
 ### 🔐 Authentication
-- Clean Sign Up / Sign In UI with tab switching
+- Sign Up / Sign In with JWT-based auth (now live against the backend)
 - Google Sign-In integration (UI ready)
 - Form validation and error handling
 
@@ -53,6 +65,7 @@
 - Calculate emissions from transport, food, and energy
 - Visual results with reduction suggestions
 - Instant CO₂ impact feedback
+- Calculations persisted via the backend API
 
 ### 👤 Profile Page
 - User profile with eco level and XP progress
@@ -65,6 +78,15 @@
 - Detailed feature showcase
 - Team and project information
 
+### 🛡️ Backend / API
+- RESTful API built with Express
+- MongoDB + Mongoose data layer
+- JWT authentication with `bcryptjs` password hashing
+- Security hardening: `helmet`, `express-rate-limit`, `express-slow-down`, `express-mongo-sanitize`, `xss-clean`, `hpp`
+- Email notifications via `nodemailer`
+- Request logging via `morgan` + `winston`
+- CORS configured for the deployed frontend origin
+
 ---
 
 ## 🛠️ Tech Stack
@@ -73,8 +95,13 @@
 |-------|-----------|
 | Markup | HTML5 |
 | Styling | CSS3 (Custom + Responsive) |
-| Logic | Vanilla JavaScript (ES6+) |
-| Auth UI | Dynamic navbar with session awareness |
+| Frontend Logic | Vanilla JavaScript (ES6+) |
+| Backend Runtime | Node.js (≥18) |
+| Backend Framework | Express |
+| Database | MongoDB (Mongoose) |
+| Auth | JWT + bcryptjs |
+| Security | Helmet, rate limiting, sanitization, XSS protection |
+| Hosting | Render (frontend + backend, separate services) |
 | Icons | SVG / Custom Assets |
 | Fonts | Google Fonts |
 
@@ -83,7 +110,8 @@
 ## 📁 Project Structure
 
 ```
-greenwallet-frontend/
+Greenwallet-A-personal-carbon-footprint-tracker/
+│
 ├── index.html                  # Landing / Home page
 ├── login.html                  # Sign Up & Sign In
 ├── dashboard.html              # User dashboard
@@ -109,10 +137,38 @@ greenwallet-frontend/
 ├── profile.js                  # Profile logic
 ├── carbon-calculator.js        # Calculator logic
 ├── navbar-auth.js              # Dynamic auth navbar
-├── api.js                      # API integration layer
+├── api.js                      # Frontend → backend API integration layer
 │
 ├── screenshots/                # Project screenshots
-└── images/                     # Assets and images
+├── images/                     # Assets and images
+│
+└── backend/                    # Node.js + Express + MongoDB API
+    ├── server.js                # App entry point
+    ├── api.js                   # API router setup
+    ├── package.json
+    ├── package-lock.json
+    │
+    ├── config/
+    │   └── db.js                # MongoDB connection
+    │
+    ├── middleware/
+    │   ├── auth.js              # JWT auth middleware
+    │   └── security.js          # Helmet, rate limiting, sanitization
+    │
+    ├── models/
+    │   ├── User.js               # User schema
+    │   └── Calculation.js        # Carbon calculation schema
+    │
+    ├── routes/
+    │   ├── auth.js               # Sign up / sign in / JWT
+    │   ├── user.js                # User profile endpoints
+    │   ├── calculations.js        # Carbon calculator endpoints
+    │   ├── stats.js               # Dashboard/stats endpoints
+    │   └── ai.js                  # AI-related endpoints
+    │
+    └── utils/
+        ├── email.js              # Nodemailer email helper
+        └── logger.js             # Winston logger
 ```
 
 ---
@@ -120,22 +176,35 @@ greenwallet-frontend/
 ## ⚡ Quick Start
 
 ### Prerequisites
+- Node.js ≥ 18 and npm (for the backend)
 - Any modern web browser (Chrome, Firefox, Edge)
-- VS Code with Live Server extension (recommended)
+- VS Code with Live Server extension (recommended for frontend)
+- MongoDB connection string (for running the backend locally)
 
-### Run Locally
+### Run the Frontend Locally
 
 **Option 1 — VS Code Live Server**
 ```bash
-git clone https://github.com/mehmoona-chand/greenwallet-frontend.git
-cd greenwallet-frontend
+git clone https://github.com/mehmoona-chand/Greenwallet-A-personal-carbon-footprint-tracker.git
+cd Greenwallet-A-personal-carbon-footprint-tracker
 # Right-click index.html → Open with Live Server
 ```
 
 **Option 2 — Direct browser**
 ```bash
-git clone https://github.com/mehmoona-chand/greenwallet-frontend.git
+git clone https://github.com/mehmoona-chand/Greenwallet-A-personal-carbon-footprint-tracker.git
 # Open index.html directly in your browser
+```
+
+### Run the Backend Locally
+
+```bash
+cd Greenwallet-A-personal-carbon-footprint-tracker/backend
+npm install
+# Create a .env file with MONGO_URI, JWT_SECRET, etc.
+npm run dev   # uses nodemon
+# or
+npm start
 ```
 
 ---
@@ -184,13 +253,56 @@ git clone https://github.com/mehmoona-chand/greenwallet-frontend.git
 - [x] Dynamic auth-aware navbar
 - [x] Carbon calculator with instant results
 - [x] Achievement and XP system UI
-- [ ] Backend API (Node.js + Express)
-- [ ] MongoDB database integration
-- [ ] JWT authentication
+- [x] Backend API (Node.js + Express)
+- [x] MongoDB database integration
+- [x] JWT authentication
+- [x] Frontend connected to live backend
+- [x] Deployed to Render (frontend + backend)
 - [ ] Google OAuth integration
 - [ ] Newsletter subscription
 - [ ] Live leaderboard
-- [ ] Deploy to Render
+
+---
+
+## 📝 Commit History
+
+Real commit log from the repository (oldest → newest):
+
+| Date | Commit | Message |
+|------|--------|---------|
+| 2026-06-17 | `998d310` | Initial commit |
+| 2026-06-17 | `29c161f` | feat: initial frontend commit - all pages, styles, and assets |
+| 2026-06-17 | `1ddb6fe` | Merge branch 'main' of https://github.com/mehmoona-chand/greenwallet-frontend |
+| 2026-06-17 | `38815dc` | add README with project details |
+| 2026-06-17 | `aa8e83c` | screenshots/ |
+| 2026-06-17 | `e7e9761` | Add files via upload |
+| 2026-06-17 | `1d6b613` | update README with screenshots and full project details |
+| 2026-06-17 | `289a208` | add project screenshots |
+| 2026-06-17 | `16fe6bb` | remove duplicate screenshots |
+| 2026-06-17 | `9626462` | remove duplicate screenshots |
+| 2026-06-17 | `a4e1ee0` | remove duplicate screenshots |
+| 2026-06-17 | `379524f` | remove duplicate screenshots |
+| 2026-06-17 | `0284353` | remove duplicate screenshots |
+| 2026-06-18 | `bc50769` | remove duplicate screenshots |
+| 2026-06-18 | `e8949c0` | remove duplicate screenshots |
+| 2026-06-18 | `f7776be` | remove duplicate screenshots |
+| 2026-06-18 | `466998e` | remove duplicate screenshots |
+| 2026-06-18 | `aebd0fd` | remove duplicate screenshots |
+| 2026-06-18 | `aa898ba` | remove duplicate screenshots |
+| 2026-06-18 | `2c041b9` | remove duplicate screenshots |
+| 2026-06-18 | `efa76d5` | remove duplicate screenshots |
+| 2026-06-18 | `0cedbb9` | remove duplicate screenshots |
+| 2026-06-18 | `3bf3771` | remove duplicate screenshots |
+| 2026-06-18 | `dc4cfbb` | remove duplicate screenshots |
+| 2026-06-18 | `6bac858` | remove duplicate screenshots |
+| 2026-06-18 | `3abfa40` | remove duplicate screenshots |
+| 2026-06-18 | `093d5db` | remove duplicate screenshots |
+| 2026-06-19 | `13cf338` | Add backend |
+| 2026-06-19 | `176f690` | Merge branch 'main' of https://github.com/mehmoona-chand/greenwallet-frontend |
+| 2026-06-19 | `c29f018` | feat: connect frontend to live backend API |
+| 2026-06-20 | `efb4881` | fix: add frontend URL to CORS allowed origins |
+
+*(31 commits total, pulled directly from `git log` on the live repo.)*
 
 ---
 
@@ -208,8 +320,8 @@ Contributions are welcome! Here's how:
 
 ## 👩‍💻 Author
 
-**Mehmoona Chand (Sylvia)**  
-BS Information Technology   
+**Mehmoona Chand (Sylvia)**
+BS Information Technology
 Dev Weekends Fellow 2026 | Aspiring DevOps & Cloud Engineer
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/mehmoonachand)
