@@ -40,7 +40,19 @@
 
 > ⚠️ Note: Render free-tier services spin down when idle, so the first request after inactivity may take ~30–60 seconds to wake up.
 
+
 ---
+## 📋 Project Overview
+
+GreenWallet is a full-stack carbon footprint and eco-finance tracker built to help individuals understand and reduce their day-to-day environmental impact.
+
+- **Problem it addresses:** most people have no easy way to see how their daily transport, food, and energy choices add up in CO₂ — GreenWallet turns that into a simple, trackable number.
+- **How it works:** users sign up, log activities through the Carbon Calculator, and see their footprint, streaks, and progress reflected on a personal Dashboard and Profile page.
+- **Architecture:** a vanilla HTML/CSS/JS frontend communicates with a separate Node.js + Express + MongoDB backend over a REST API, with JWT-based authentication and hardened security middleware.
+- **Current state:** both the frontend and backend are built and deployed live on Render (see [Live Application](#-live-application) above), with account creation, login, and carbon calculations persisted to the database.
+- **Why it matters:** the project is framed around UN Sustainable Development Goals 12 (Responsible Consumption and Production) and 13 (Climate Action), aiming to make sustainable living measurable and motivating through gamification (XP, streaks, achievement badges).
+
+- 
 
 ## ✨ Features
 
@@ -264,17 +276,6 @@ npm start
 
 ---
 
-## 📋 Project Overview
-
-GreenWallet is a full-stack carbon footprint and eco-finance tracker built to help individuals understand and reduce their day-to-day environmental impact.
-
-- **Problem it addresses:** most people have no easy way to see how their daily transport, food, and energy choices add up in CO₂ — GreenWallet turns that into a simple, trackable number.
-- **How it works:** users sign up, log activities through the Carbon Calculator, and see their footprint, streaks, and progress reflected on a personal Dashboard and Profile page.
-- **Architecture:** a vanilla HTML/CSS/JS frontend communicates with a separate Node.js + Express + MongoDB backend over a REST API, with JWT-based authentication and hardened security middleware.
-- **Current state:** both the frontend and backend are built and deployed live on Render (see [Live Application](#-live-application) above), with account creation, login, and carbon calculations persisted to the database.
-- **Why it matters:** the project is framed around UN Sustainable Development Goals 12 (Responsible Consumption and Production) and 13 (Climate Action), aiming to make sustainable living measurable and motivating through gamification (XP, streaks, achievement badges).
-
----
 
 ## 🤝 Contributing
 
