@@ -52,7 +52,6 @@ GreenWallet is a full-stack carbon footprint and eco-finance tracker built to he
 - **Current state:** both the frontend and backend are built and deployed live on Render (see [Live Application](#-live-application) above), with account creation, login, and carbon calculations persisted to the database.
 - **Why it matters:** the project is framed around UN Sustainable Development Goals 12 (Responsible Consumption and Production) and 13 (Climate Action), aiming to make sustainable living measurable and motivating through gamification (XP, streaks, achievement badges).
 
-- 
 
 ## ✨ Features
 
