@@ -117,7 +117,7 @@ function setupSignupForm() {
 
       if (result.success) {
         showAlert('🎉 Account created! Welcome, <strong>' + result.user.name + '</strong>! Redirecting...', 'success');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1300);
+        setTimeout(() => { window.location.href = 'profile.html'; }, 1300);
       } else {
         showAlert('❌ ' + (result.message || 'Registration failed. Please try again.'), 'error');
         if (result.message?.toLowerCase().includes('email')) {
@@ -180,7 +180,7 @@ function setupLoginForm() {
 
       if (result.success) {
         showAlert('✅ Welcome back, <strong>' + result.user.name + '</strong>! Redirecting...', 'success');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+        setTimeout(() => { window.location.href = 'profile.html'; }, 1200);
       } else {
         showAlert(
           '❌ ' + (result.message || 'Invalid email or password.') +
@@ -250,45 +250,81 @@ function togglePass(inputId, btn) {
 // GOOGLE OAUTH — Real implementation
 // Uses Google Identity Services (GSI) library
 // ══════════════════════════════════════════════
+
+// 👉 Your real Google Client ID is plugged in below.
+const GOOGLE_CLIENT_ID = '166151254632-c07ash3vl4euc8u7q21qq4vg68ath9tc.apps.googleusercontent.com';
+
+let gwTokenClient = null;
+
 function setupGoogleOAuth() {
   const btn = document.getElementById('google-btn');
   if (!btn) return;
 
-  // Check if Google GSI library loaded
-  if (typeof google === 'undefined') {
-    // Library not loaded — show info message
-    btn.addEventListener('click', () => {
-      showAlert(
-        'ℹ️ Google Sign-In requires the Google Client ID to be configured. ' +
-        'Use <strong>email & password</strong> for now — it works the same way!',
-        'error'
-      );
-    });
-    return;
-  }
+  // Retry-poll: the GSI script can take a moment to finish loading even with
+  // `defer`, so we check a few times before giving up instead of failing instantly.
+  let attempts = 0;
+  const maxAttempts = 20; // 20 x 150ms = 3 seconds total
 
-  // Google Identity Services is available — initialize it
-  google.accounts.id.initialize({
-    // TODO: Replace with your real Client ID from console.cloud.google.com
-    client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
-    callback: handleGoogleCallback,
-    auto_select: false,
+  const tryInit = () => {
+    if (typeof google !== 'undefined' && google.accounts?.oauth2) {
+      initGoogleButton(btn);
+      return;
+    }
+    attempts++;
+    if (attempts < maxAttempts) {
+      setTimeout(tryInit, 150);
+    } else {
+      // Genuinely not available after 3 seconds — wire up the fallback message
+      btn.addEventListener('click', () => {
+        showAlert(
+          'ℹ️ Google Sign-In script did not load (check your internet connection). ' +
+          'Use <strong>email & password</strong> for now — it works the same way!',
+          'error'
+        );
+      });
+    }
+  };
+
+  tryInit();
+}
+
+// Uses the OAuth popup flow (initTokenClient) instead of One Tap / prompt().
+// This opens a real popup window and does NOT depend on FedCM, which is
+// what was causing the 403 / NetworkError / NotAllowedError loop before.
+function initGoogleButton(btn) {
+  gwTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope:     'openid email profile',
+    callback:  handleGoogleCallback,
+    error_callback: (err) => {
+      if (err.type === 'popup_failed_to_open') {
+        showAlert(
+          'ℹ️ Google popup was blocked. Please allow pop-ups for this site and try again, ' +
+          'or use email & password instead.',
+          'error'
+        );
+      } else if (err.type === 'popup_closed') {
+        // User closed the popup themselves — no error needed
+      } else {
+        showAlert('❌ Google sign-in error: ' + (err.type || 'unknown error'), 'error');
+      }
+    },
   });
 
   btn.addEventListener('click', () => {
-    google.accounts.id.prompt();
+    gwTokenClient.requestAccessToken();
   });
 }
 
-// Called by Google after user picks their account
+// Called by Google after the user completes sign-in in the popup
 async function handleGoogleCallback(response) {
-  // response.credential is a JWT token from Google
-  // Send it to our backend to verify and create/login user
+  // response.access_token is an OAuth access token (not a JWT) —
+  // send it to our backend, which will fetch the user's profile from Google
   try {
-    const res = await fetch('http://localhost:5000/api/auth/google', {
+    const res = await fetch(`${GW_API}/auth/google`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ credential: response.credential }),
+      body:    JSON.stringify({ access_token: response.access_token }),
     });
     const data = await res.json();
 
@@ -297,7 +333,7 @@ async function handleGoogleCallback(response) {
       localStorage.setItem('gwUser',  JSON.stringify(data.user));
       localStorage.setItem('greenWalletUser', data.user.name);
       showAlert('✅ Signed in with Google! Welcome, <strong>' + data.user.name + '</strong>!', 'success');
-      setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+      setTimeout(() => { window.location.href = 'profile.html'; }, 1200);
     } else {
       showAlert('❌ Google sign-in failed: ' + data.message, 'error');
     }

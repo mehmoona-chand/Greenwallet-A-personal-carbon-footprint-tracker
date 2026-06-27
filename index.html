@@ -463,13 +463,7 @@
     // Close with Escape key
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlog(); });
 
-    // ── NEWSLETTER FORM FIX ──────────────────────────
-    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      this.style.display = 'none';
-      document.getElementById('newsletter-success').style.display = 'block';
-    });
-
+    // ── NEWSLETTER (handled by newsletter.js) ────────
     // ── NAVBAR SCROLL EFFECT ─────────────────────────
     window.addEventListener('scroll', () => {
       document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
@@ -481,5 +475,6 @@
       document.querySelector('.nav-menu').classList.toggle('active');
     });
   </script>
+  <script src="newsletter.js"></script>
 </body>
 </html>

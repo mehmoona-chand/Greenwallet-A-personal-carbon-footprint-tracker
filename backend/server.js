@@ -85,6 +85,7 @@ app.use('/api/calculations', require('./routes/calculations'));
 app.use('/api/user',         require('./routes/user'));
 app.use('/api/stats',        require('./routes/stats'));
 app.use('/api/ai',           require('./routes/ai'));
+app.use('/api/newsletter',   require('./routes/newsletter'));
 
 // ── Health check ────────────────────────────
 app.get('/', (req, res) => {
@@ -93,12 +94,13 @@ app.get('/', (req, res) => {
     message: '🌿 GreenWallet API is running!',
     version: '2.0.0',
     security: 'production-grade',
-    endpoints: {
+      endpoints: {
       auth:         '/api/auth',
       calculations: '/api/calculations',
       user:         '/api/user',
       stats:        '/api/stats',
       ai:           '/api/ai',
+      newsletter:   '/api/newsletter',
     },
   });
 });

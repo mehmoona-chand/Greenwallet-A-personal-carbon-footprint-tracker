@@ -3,7 +3,7 @@
 // Add to every HTML page: <script src="api.js"></script>
 // ─────────────────────────────────────────────
 
-const GW_API = 'http://localhost:5000/api';
+const GW_API = 'https://greenwallet-backend-nm7j.onrender.com/api';
 
 const getToken  = () => localStorage.getItem('gwToken');
 const authHeaders = () => ({
@@ -232,13 +232,27 @@ const gwAI = {
   },
 };
 
+// ════════════════════════════════════════════
+// NEWSLETTER
+// ════════════════════════════════════════════
+const gwNewsletter = {
+  async subscribe(email, source = 'website') {
+    return await gwFetch('/newsletter/subscribe', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email, source }),
+    });
+  },
+};
+
 // Export global GW object
 window.GW = {
-  auth:  gwAuth,
-  calc:  gwCalc,
-  user:  gwUser,
-  stats: gwStats,
-  ai:    gwAI,
+  auth:        gwAuth,
+  calc:        gwCalc,
+  user:        gwUser,
+  stats:       gwStats,
+  ai:          gwAI,
+  newsletter:  gwNewsletter,
 };
 
 console.log('🌿 GreenWallet API connector v2.0 loaded');

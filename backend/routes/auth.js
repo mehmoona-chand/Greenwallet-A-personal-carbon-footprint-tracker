@@ -319,31 +319,37 @@ router.post('/reset-password/:token',
 
 // ════════════════════════════════════════════
 // POST /api/auth/google
-// Google OAuth — verifies Google ID token
+// Google OAuth — verifies the access token by
+// asking Google's own userinfo endpoint who it
+// belongs to. This works with the popup-based
+// OAuth flow (initTokenClient) on the frontend,
+// which is more reliable than the FedCM-based
+// One Tap flow (prompt()) we used before.
 // ════════════════════════════════════════════
 router.post('/google', authLimiter, async (req, res) => {
-  const { credential } = req.body;
+  const { access_token } = req.body;
 
-  if (!credential || typeof credential !== 'string' || credential.length > 4096) {
+  if (!access_token || typeof access_token !== 'string' || access_token.length > 4096) {
     return res.status(400).json({ success: false, message: 'Invalid Google credential' });
   }
 
   try {
-    // Decode the Google JWT (it's a standard JWT)
-    // In production: use google-auth-library to verify properly
-    const parts   = credential.split('.');
-    if (parts.length !== 3) throw new Error('Invalid JWT format');
+    // Ask Google directly who this access token belongs to.
+    // If the token is fake, expired, or for a different app, Google rejects it.
+    const googleRes = await fetch(
+      'https://www.googleapis.com/oauth2/v3/userinfo',
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
 
-    const payload  = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-
-    // Basic validation
-    if (!payload.email || !payload.sub) {
-      return res.status(400).json({ success: false, message: 'Invalid Google token' });
+    if (!googleRes.ok) {
+      logger.warn(`Google userinfo rejected token: status=${googleRes.status} IP:${req.ip}`);
+      return res.status(401).json({ success: false, message: 'Google authentication failed' });
     }
 
-    // Verify token hasn't expired
-    if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) {
-      return res.status(401).json({ success: false, message: 'Google token expired' });
+    const payload = await googleRes.json();
+
+    if (!payload || !payload.email || !payload.sub) {
+      return res.status(400).json({ success: false, message: 'Invalid Google token' });
     }
 
     // Find or create user
@@ -358,7 +364,7 @@ router.post('/google', authLimiter, async (req, res) => {
         email:        payload.email,
         googleId:     payload.sub,
         authProvider: 'google',
-        password:     require('crypto').randomBytes(32).toString('hex'), // random unusable pw
+        password:     crypto.randomBytes(32).toString('hex'), // random unusable pw
         isEmailVerified: true,
       });
       logger.info(`New Google user: ${payload.email} IP:${req.ip}`);

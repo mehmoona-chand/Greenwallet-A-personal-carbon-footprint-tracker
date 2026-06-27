@@ -236,31 +236,44 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark
 .mini-bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(to top,#2a9d8f,#4ecdc4);min-height:4px;transition:height 0.9s cubic-bezier(0.34,1.56,0.64,1)}
 .mini-bar-label{font-size:0.58rem;color:var(--text-light);text-align:center;white-space:nowrap;overflow:hidden;max-width:38px;text-overflow:ellipsis}
 
-/* FOOTER */
-.footer{background:linear-gradient(135deg,#0d3b35,#1a5f57);color:rgba(255,255,255,0.85);padding:52px 0 32px;margin-top:80px}
-.footer-rounded{border-radius:32px 32px 0 0}
-.footer-container{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
-.footer-brand{flex:1;min-width:200px}
-.footer-brand .logo{color:white}
-.tagline{font-size:0.85rem;color:rgba(255,255,255,0.55);margin-top:10px;line-height:1.6}
-.footer-links{display:flex;gap:48px;flex-wrap:wrap}
-.link-col h4{font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4ecdc4;margin-bottom:14px}
-.link-col ul{list-style:none}
-.link-col ul li{margin-bottom:9px}
-.link-col ul li a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.88rem;transition:color 0.2s}
-.link-col ul li a:hover{color:white}
-.social-icons{display:flex;gap:12px;margin-top:4px}
-.social-icons a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:0.9rem;transition:all 0.3s}
-.social-icons a:hover{background:var(--green-mid);color:white;transform:translateY(-3px)}
-.newsletter-col{min-width:220px}
-.newsletter-col h4{font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4ecdc4;margin-bottom:10px}
-.newsletter-col p{font-size:0.85rem;color:rgba(255,255,255,0.55);margin-bottom:14px}
-.newsletter-form{display:flex;gap:8px}
-.newsletter-form input{flex:1;padding:10px 14px;border:none;border-radius:50px;font-family:'Poppins',sans-serif;font-size:0.85rem;background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
-.newsletter-form input::placeholder{color:rgba(255,255,255,0.4)}
-.newsletter-form input:focus{outline:none;border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.15)}
-.newsletter-form button{background:var(--green-mid);color:white;border:none;padding:10px 18px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.3s}
-.newsletter-form button:hover{background:#4ecdc4;transform:translateY(-2px)}
+/* FOOTER — matches index.html (styles.css) */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.footer{background:linear-gradient(135deg,#4ecdc4,#2a9d8f)!important;color:rgba(255,255,255,0.9);margin-top:100px;padding-top:60px}
+.footer-container{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.footer-brand{max-width:300px}
+.footer-brand .logo{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.footer-brand .logo-img{width:40px;height:40px}
+.footer-brand span{font-size:1.4rem;font-weight:700;color:white}
+.tagline{font-size:1rem;color:rgba(255,255,255,0.8);line-height:1.6;margin:16px 0 0}
+.footer-links{display:flex;gap:50px;flex-wrap:wrap}
+.link-col h4,.newsletter-col h4{color:white;font-size:1.1rem;margin-bottom:16px;font-weight:600}
+.link-col ul{list-style:none;padding:0;margin:0}
+.link-col ul li{margin-bottom:10px}
+.link-col ul li a{color:rgba(255,255,255,0.7);text-decoration:none;transition:color 0.3s ease;font-weight:500}
+.link-col ul li a:hover{color:#4ecdc4}
+.social-icons{display:flex;gap:16px;margin-top:12px}
+.social-icons a{color:rgba(255,255,255,0.7);font-size:1.3rem;transition:all 0.3s ease;text-decoration:none}
+.social-icons a:hover{color:#4ecdc4;transform:translateY(-3px)}
+.newsletter-col{max-width:300px}
+.newsletter-col p{font-size:0.9rem;color:rgba(255,255,255,0.7);margin-bottom:16px}
+.newsletter-form{display:flex;gap:8px;margin-top:12px}
+.newsletter-form input{flex:1;padding:12px 16px;border:none;border-radius:12px;background:rgba(255,255,255,0.15);color:white;font-size:0.95rem;font-family:'Poppins',sans-serif;backdrop-filter:blur(8px);transition:all 0.3s ease}
+.newsletter-form input::placeholder{color:rgba(255,255,255,0.6)}
+.newsletter-form input:focus{outline:none;background:rgba(255,255,255,0.25);box-shadow:0 0 0 2px #4ecdc4}
+.newsletter-form button{background:#4ecdc4;color:white;border:none;padding:0 20px;border-radius:12px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.3s ease}
+.newsletter-form button:hover{background:#2a9d8f;transform:translateY(-2px);box-shadow:0 8px 20px rgba(46,213,115,0.3)}
+.newsletter-success{color:#e9f5db;font-size:0.9rem;margin-top:8px;display:none}
+.footer-rounded{border-radius:32px 32px 0 0!important;margin:120px 20px 0!important;box-shadow:0 -20px 40px rgba(15,58,52,0.3)!important;background:radial-gradient(circle at 20% 80%,rgba(100,162,127,0.15),transparent 50%),radial-gradient(circle at 80% 20%,rgba(74,205,196,0.15),transparent 50%),linear-gradient(145deg,#0f3a34,#1a5f57,#0f3a34)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(74,205,196,0.2);border-bottom:none;position:relative;overflow:hidden}
+.footer-rounded::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.02) 10px,transparent 10px,transparent 20px);pointer-events:none;border-radius:32px 32px 0 0;z-index:0}
+.footer-container{position:relative;z-index:1}
+.newsletter-col h4{background:linear-gradient(90deg,#4ecdc4,#2a9d8f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+.footer-rounded .newsletter-form input{background:rgba(255,255,255,0.12)!important;border:1px solid rgba(74,205,196,0.3)!important;border-radius:16px!important;padding:14px 18px!important;color:white!important;font-size:1rem!important}
+.footer-rounded .newsletter-form input::placeholder{color:rgba(255,255,255,0.5)!important}
+.footer-rounded .newsletter-form input:focus{background:rgba(255,255,255,0.2)!important;border-color:#4ecdc4!important;box-shadow:0 0 0 3px rgba(74,205,196,0.3)!important}
+.footer-rounded .newsletter-form button{background:linear-gradient(135deg,#4ecdc4,#2a9d8f)!important;padding:14px 24px!important;border-radius:16px!important;box-shadow:0 6px 15px rgba(46,213,115,0.3)!important}
+.footer-rounded .newsletter-form button:hover{transform:translateY(-3px) scale(1.05)!important;box-shadow:0 12px 25px rgba(46,213,115,0.4)!important;background:linear-gradient(135deg,#2a9d8f,#4ecdc4)!important}
+@media(max-width:992px){.footer-container{flex-direction:column;text-align:center}.footer-links{justify-content:center;order:2}.newsletter-col{order:1;text-align:center}.footer-brand{order:3}.footer-rounded{margin:80px 10px 0!important;border-radius:24px 24px 0 0!important}}
+@media(max-width:480px){.newsletter-form{flex-direction:column}.newsletter-form input,.newsletter-form button{width:100%}}
 
 /* RESPONSIVE */
 @media(max-width:1000px){.profile-grid{grid-template-columns:1fr}.top-stats{grid-template-columns:repeat(2,1fr)}}
